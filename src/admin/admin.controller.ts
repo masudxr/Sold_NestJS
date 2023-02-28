@@ -6,12 +6,15 @@ import {
   Param,
   Delete,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuardAdmin } from 'src/guard/auth.admin.guard';
 import { AdminService } from './admin.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 
 @Controller('admin')
+@UseGuards(AuthGuardAdmin)
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
