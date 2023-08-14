@@ -6,15 +6,15 @@ import {
   Param,
   Delete,
   Put,
-  UseGuards,
+  // UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { AuthGuardAdmin } from 'src/guard/auth.admin.guard';
+// import { AuthGuardAdmin } from 'src/guard/auth.admin.guard';
 
 @Controller('user')
-@UseGuards(AuthGuardAdmin)
+// @UseGuards(AuthGuardAdmin)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

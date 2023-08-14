@@ -25,7 +25,9 @@ export class AdminController {
 
   @Get()
   findAll() {
-    return this.adminService.findAll();
+    const user = this.adminService.findAll();
+    console.log(user);
+    return user;
   }
 
   @Get(':id')
