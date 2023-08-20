@@ -38,7 +38,9 @@ export class AuthController {
 
   @UseGuards(UserGuard)
   @Get('user/profile')
-  helloUser(@Request() req) {
-    return req.user;
+  async helloUser(@Request() req) {
+    const user = await this.authService.reqUser(req);
+    console.log('user:', user);
+    return user;
   }
 }

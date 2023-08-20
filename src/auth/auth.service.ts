@@ -1,4 +1,6 @@
 import {
+  HttpException,
+  HttpStatus,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -35,5 +37,38 @@ export class AuthService {
     } else {
       throw new UnauthorizedException();
     }
+  }
+
+  async reqUser(req: any) {
+    const bearer = req.header('authorization');
+    bearer.replace('Bearer ', '');
+    const parts = bearer.split(' ');
+    if (parts.length === 2) {
+      const token = parts[1];
+      try {
+        const ver = await this._jwtService.verifyAsync(token, {
+          secret: 'SECRET',
+        });
+        console.log('req ver', ver);
+
+        const user = await this._userService.findOne(ver.name);
+        console.log('req User', user);
+        if (user.name == ver.username) {
+          return user;
+        }
+      } catch (error) {
+        throw new HttpException(
+          {
+            status: HttpStatus.FORBIDDEN,
+            error: error.message,
+          },
+          HttpStatus.FORBIDDEN,
+          {
+            cause: error,
+          },
+        );
+      }
+    }
+    return false;
   }
 }
